@@ -7,6 +7,8 @@ ruby '3.1.4'
 gem 'rails', '~> 6.1.4'
 # Use sqlite3 as the database for Active Record
 gem 'pg'
+
+gem 'bundle'
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
 # Use SCSS for stylesheets
@@ -58,6 +60,7 @@ group :test do
   gem 'webdrivers'
 end
 
+gem 'ransack', '3.2.1'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 

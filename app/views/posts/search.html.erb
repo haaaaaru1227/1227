@@ -1,0 +1,34 @@
+<div class="container">
+  <% if @show_search_count %>
+    <h2 class="text-center">
+      検索結果: <%= @posts.total_count %> 件
+    </h2>
+  <% end %>
+
+  <% @posts.each do |post| %> <!-- 投稿をループ -->
+    <div><%= link_to post.title, post_path(post) %></div>
+    <div>posted by <%= post.user.name if post.user %></div>
+
+    <div class="d-flex">
+      <div>
+        <% if post.tags.any? %> <!-- タグが存在する場合 -->
+          <% post.tags.each do |tag| %>
+            <%= link_to tag.name, search_posts_path(tag_id: tag.id), class: "badge rounded-pill bg-primary text-decoration-none text-white", id: "tag_#{tag.id}" %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <% if current_user&.mine?(post) %>
+        <div class="ms-auto">
+          <div class="text-end">
+            <%= link_to '編集', edit_post_path(post), class: 'btn btn-success btn-sm' %>
+            <%= link_to '削除', post_path(post), class: 'btn btn-danger btn-sm', method: :delete, data: { confirm: '削除しますか？' } %>
+          </div>
+              <div><%= l post.created_at, format: :long %></div>
+        </div>
+      <% end %>
+    </div>
+
+    <hr>
+  <% end %>
+</div>

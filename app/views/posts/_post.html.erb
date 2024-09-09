@@ -1,22 +1,26 @@
-<li id="<%= dom_id(post) %>">
-  <div>
-    <div><%= link_to post.title, post_path(post) %></div>
-    posted by <%= post.user.name %>
-  </div>
-  <div class="d-flex">
-    <div class="ms-auto">
+<% @posts.each do |post| %>
+  <li id="<%= dom_id(post) %>">
+    <div>
+      <div><%= link_to post.title, post_path(post) %></div>
+      posted by <%= post.user.name %>
+        <div class="d-flex">
+       <div>
+      <% if post.tags.any? %>
+        <% post.tags.each do |tag| %>
+          <%= link_to tag.name, search_posts_path(tag_id: tag.id), class: "badge rounded-pill bg-primary text-decoration-none text-white", id: "tag_#{tag.id}"%>
+        <% end %>
+      <% end %>
+    </div>
       <% if current_user&.mine?(post) %>
+      <div class="ms-auto">
         <div class="text-end">
           <%= link_to '編集', edit_post_path(post), class: 'btn btn-success btn-sm' %>
-          <%= link_to '削除',
-                      post_path(post),
-                      class: 'btn btn-danger btn-sm',
-                      method: :delete,
-                      data: { confirm: '削除します' } %>
+          <%= link_to '削除', post_path(post), class: 'btn btn-danger btn-sm', method: :delete, data: { confirm: '削除しますか？' } %>
         </div>
-      <% end %>
-      <%= l post.created_at, format: :long %>
-    </div>
-  </div>
-  <hr>
-</li>
+        <div><%= l post.created_at, format: :long %></div>
+         </div>
+         <% end %>
+       </div>
+           <hr>
+  </li>
+<% end %>

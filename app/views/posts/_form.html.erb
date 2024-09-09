@@ -8,6 +8,10 @@
     <%= f.label :body %>
     <%= f.text_area :body, class: 'form-control', rows: 5 %>
   </div>
+  <div class="mb-3">
+     <%= f.label :tag_name %>
+     <%= f.text_field :tag_name, value: post.tags.pluck(:name).join(','), class: "form-control", placeholder: ",で区切って入力して下さい" %>
+  </div>
 
   <%= f.submit class: 'btn btn-primary'  %>
 <% end %>
